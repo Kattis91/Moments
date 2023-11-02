@@ -1,10 +1,11 @@
-import React from 'react'
-import styles from '../../styles/Profile.module.css'
-import btnStyles from '../../styles/Button.module.css'
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import Avatar from '../../components/Avatar';
-import { Button } from 'react-bootstrap';
+import React from "react";
+import styles from "../../styles/Profile.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { Link } from "react-router-dom";
+import Avatar from "../../components/Avatar";
+import { Button } from "react-bootstrap";
+import { useSetProfileData } from "../../contexts/ProfileDataContext";
 
 const Profile = (props) => {
   const { profile, mobile, imageSize = 55 } = props;
@@ -13,8 +14,10 @@ const Profile = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
+  const { handleFollow } = useSetProfileData();
+
   return (
-    <div 
+    <div
       className={`my-3 d-flex align-items-center ${mobile && "flex-column"}`}
     >
       <div>
@@ -39,7 +42,7 @@ const Profile = (props) => {
           ) : (
             <Button
               className={`${btnStyles.Button} ${btnStyles.Black}`}
-              onClick={() => {}}
+              onClick={() => handleFollow(profile)}
             >
               follow
             </Button>
@@ -49,4 +52,4 @@ const Profile = (props) => {
   );
 };
 
-export default Profile
+export default Profile;
